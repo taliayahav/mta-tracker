@@ -64,3 +64,26 @@ Write boilerplate manually, or use Java records (limited — no JPA support for 
 Adds a compile-time dependency. Some engineers dislike "magic." But the reduction in noise is significant and it is widely used in production codebases.
 
 ---
+
+## Decision: Use the MTA GTFS-RT feed as the source of live train data
+
+**Why:**
+
+The MTA GTFS Realtime feed is the official source for live train positions, arrival predictions, and service alerts. Using the official feed provides accurate, up-to-date data and aligns the project with an industry-standard transit data format.
+
+**Alternatives:**
+Use a third-party transit API or scrape data from another source. These options would add unnecessary dependencies and may be less reliable than the official feed.
+
+**Tradeoffs:**
+The feed is provided in Protocol Buffers instead of JSON, so additional parsing logic and dependencies are required. However, this approach ensures the application uses the most accurate and standardized source of live transit data.
+
+## Decision: Arrival modeled as a DTO, not an Entity
+
+**Why:**
+Arrival data comes from the MTA's live API and changes constantly. It is temporary data that is returned to the frontend but does not need to be stored in the database. A DTO is the right fit because it is designed for transferring data rather than persisting it.
+
+**Alternatives:**
+Model Arrival as a JPA entity and store it in PostgreSQL. This could support historical analysis, but the data would become outdated within seconds and would require constant database writes.
+
+**Tradeoffs:**
+Arrival data is not persisted, so it is only available for the duration of a request. This is intentional because the value of the data is in showing the most up-to-date arrival times.
