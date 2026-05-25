@@ -87,3 +87,14 @@ Model Arrival as a JPA entity and store it in PostgreSQL. This could support his
 
 **Tradeoffs:**
 Arrival data is not persisted, so it is only available for the duration of a request. This is intentional because the value of the data is in showing the most up-to-date arrival times.
+
+## Decision: Redis for caching live arrival data
+
+**Why:**
+Live MTA arrival data changes frequently, but not on every request. Without caching, every API request would trigger multiple external GTFS feed calls, creating unnecessary network traffic and slower response times. Redis allows us to temporarily cache arrival responses in memory and reuse them across requests.
+
+**Alternatives:**
+No caching (simpler but inefficient), in-memory application cache (works only on one server instance), database persistence (too slow and unnecessary for short-lived realtime data).
+
+**Tradeoffs:**
+Adds another infrastructure component to run locally and in production. Cached data may be slightly stale for a short period, but the performance and scalability improvements are worth it for realtime transit data.

@@ -4,6 +4,7 @@ import com.google.transit.realtime.GtfsRealtime.FeedMessage;
 import com.google.transit.realtime.GtfsRealtime.TripUpdate.StopTimeUpdate;
 import com.talia.mtatracker.dto.ArrivalDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -16,6 +17,7 @@ public class MtaApiClient {
     private static final String BASE_URL =
         "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2F";
 
+    @Cacheable(value = "arrivals", key = "#feedId")
     public List<ArrivalDTO> getArrivalsForStop(String stopId, String feedId) {
         List<ArrivalDTO> arrivals = new ArrayList<>();
 
