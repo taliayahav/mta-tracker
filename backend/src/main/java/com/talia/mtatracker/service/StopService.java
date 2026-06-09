@@ -24,6 +24,10 @@ public class StopService {
                 .orElseThrow(() -> new RuntimeException("Stop not found: " + stopId));
     }
 
+    public List<Stop> searchByName(String query) {
+        return stopRepository.findByNameContainingIgnoreCase(query);
+    }
+
     public Stop saveStop(Stop stop) {
         return stopRepository.save(stop);
     }

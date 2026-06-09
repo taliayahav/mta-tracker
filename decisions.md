@@ -109,3 +109,14 @@ Manual refresh button, WebSockets/server-sent events, shorter or longer polling 
 
 **Tradeoffs:**
 Polling creates periodic API requests even when the user is not actively interacting with the page. However, it is much simpler than maintaining persistent WebSocket connections and is sufficient for a subway arrival tracker.
+
+## Decision: Seed stop data from MTA GTFS static feed
+
+**Why:**
+The MTA already provides a complete list of subway stops through its static GTFS dataset. Seeding the database from this source avoids manually maintaining stop information and ensures our data matches the official MTA stop IDs and names.
+
+**Alternatives:**
+Manually inserting stops, maintaining a custom stop dataset, or reading directly from the GTFS file on every request.
+
+**Tradeoffs:**
+Adds startup logic and requires downloading GTFS data, but provides a reliable source of truth and enables fast database-backed search and autocomplete.

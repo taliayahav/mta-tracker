@@ -23,6 +23,11 @@ public class StopController {
         return ResponseEntity.ok(stopService.getAllStops());
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Stop>> searchStops(@RequestParam String q) {
+        return ResponseEntity.ok(stopService.searchByName(q));
+    }
+
     @GetMapping("/{stopId}")
     public ResponseEntity<Stop> getStop(@PathVariable String stopId) {
         return ResponseEntity.ok(stopService.getStopByStopId(stopId));
