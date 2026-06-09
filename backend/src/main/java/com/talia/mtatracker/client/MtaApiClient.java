@@ -3,8 +3,8 @@ package com.talia.mtatracker.client;
 import com.google.transit.realtime.GtfsRealtime.FeedMessage;
 import com.google.transit.realtime.GtfsRealtime.TripUpdate.StopTimeUpdate;
 import com.talia.mtatracker.dto.ArrivalDTO;
-import org.springframework.stereotype.Component;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.net.URL;

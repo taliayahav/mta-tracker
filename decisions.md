@@ -98,3 +98,14 @@ No caching (simpler but inefficient), in-memory application cache (works only on
 
 **Tradeoffs:**
 Adds another infrastructure component to run locally and in production. Cached data may be slightly stale for a short period, but the performance and scalability improvements are worth it for realtime transit data.
+
+## Decision: Client-side polling every 15 seconds
+
+**Why:**
+Arrival data changes frequently, so the frontend automatically refreshes arrivals every 15 seconds to keep the display current without requiring the user to manually refresh.
+
+**Alternatives:**
+Manual refresh button, WebSockets/server-sent events, shorter or longer polling intervals.
+
+**Tradeoffs:**
+Polling creates periodic API requests even when the user is not actively interacting with the page. However, it is much simpler than maintaining persistent WebSocket connections and is sufficient for a subway arrival tracker.

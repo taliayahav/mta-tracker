@@ -1,10 +1,10 @@
 package com.talia.mtatracker.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import java.io.Serializable;
 
 @Getter
-public class ArrivalDTO {
+public class ArrivalDTO implements Serializable {
 
     private String routeId;       // e.g. "A"
     private String stopId;        // e.g. "127N"
